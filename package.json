@@ -1,0 +1,24 @@
+{
+  "name": "buyingdotcom-ipfs-api",
+  "version": "1.0.0",
+  "description": "REST API for communicating with ipfs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.private.js",
+    "dev": "nodemon app.private.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.netobjex.com:buying1/api-ipfs.git"
+  },
+  "author": "Deepu TG|deepu.tg@netobjex.com",
+  "license": "ISC",
+  "dependencies": {
+    "bs58": "^4.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "ipfs-http-client": "^42.0.0-pre.2"
+  }
+}
