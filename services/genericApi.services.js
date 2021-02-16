@@ -64,7 +64,7 @@ exports.fetchIndexFileHashFromGeneralAPI = () => {
     console.log(indexFileKey_base64)
     const contractState = returnData.data.contractState
     for (let i = 0; i < contractState.length; i++) {
-      console.log(contractState[i].key)
+      // console.log(contractState[i].key)
       if (contractState[i].key == indexFileKey_base64) {
         indexFileHash = new Buffer.from(contractState[i].value.bytes, 'base64').toString('ascii');
       }
