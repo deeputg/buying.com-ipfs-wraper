@@ -21,9 +21,15 @@ exports.postOrderToIPFS = async (indexFileHash, orderData) => {
   let indexFileData;
   if (indexFileHash == "")
     indexFileData = "{}";
-  else
-    indexFileData = await this.fetchFile(indexFileHash);
-  // console.log(indexFileData)
+  else {
+    try {
+      indexFileData = await this.fetchFile(indexFileHash);
+      console.log(indexFileData)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const today = new Date();
   const index = getIndexFromDate(today)
 
