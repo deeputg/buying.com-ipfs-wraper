@@ -1,6 +1,7 @@
 const axios = require('axios').default;
 const genereicApi = process.env.GENERIC_API
 const appId = parseInt(process.env.APP_ID)
+const contractAddress = process.env.CONTRACT_ADDRESS;
 
 exports.postDataToGenericAPI = (hash) => {
 
@@ -54,7 +55,8 @@ exports.fetchStatusGenericAPI = () => {
 
 exports.fetchIndexFileHashFromGeneralAPI = () => {
   const body = {
-    "contract_id": appId
+    "contract_id": appId,
+    "contract_addr": contractAddress
   }
   return axios.post(genereicApi + "algo-contract-state", body).then(returnData => {
     let indexFileHash = "";
