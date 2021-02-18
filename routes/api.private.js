@@ -31,14 +31,27 @@ router.post("/store-order-details", async (req, res) => {
     // console.log(indexFileHash)
     // return
     // const indexFileHash = ""
-    const indexHash = await postOrderToIPFS(indexFileHash, data.orderData);
-    const result = await postDataToGenericAPI(indexHash);
-    res.send({ status: true, data: result })
+    try {
+        const indexHash = await postOrderToIPFS(indexFileHash, data.orderData);
+        const result = await postDataToGenericAPI(indexHash);
+        res.send({ status: true, data: result })
+    } catch (error) {
+        res.status(error.response.status).send({ status: false, error })
+
+    }
+
 })
 
 router.get("/fetch-data-ipfs/:hash", async (req, res) => {
     const hash = req.params.hash
-    res.send({ status: true, data: await fetchFile });
+    try {
+        const file = await fetchFile;
+        res.send({ status: true, data: file });
+    } catch (error) {
+        res.status(error.response.status).send({ status: false, error });
+
+    }
+
 })
 
 router.get("/status", async (req, res) => {
@@ -47,7 +60,7 @@ router.get("/status", async (req, res) => {
         res.send({ status: true, data: result });
     } catch (error) {
         console.log(error)
-        res.status(500).send(error)
+        res.status(error.response.status).send(error)
     }
 
 })
@@ -59,35 +72,41 @@ router.get("/get-asset-balance/:address", async (req, res) => {
         res.send({ status: true, data: result });
     } catch (error) {
         console.log(error)
-        res.status(500).send(error)
+        res.status(error.response.status).send(error)
     }
 
 })
 
 router.get("/fetch-order-by-date/:date", async (req, res) => {
     const hash = await fetchIndexFileHashFromGeneralAPI();
-    // const hash = req.params.hash
-    // const index = req.params.date
     const date = new Date(req.params.date)
     const index = getIndexFromDate(date)
 
 
     let indexFileData = await fetchFile(hash);
     if (indexFileData == "") {
-        res.send({ status: false, message: "indexer file is empty" })
+        res.send({ status: false, message: "index file is empty" })
     }
 
     indexFileData = JSON.parse(indexFileData)
-    console.log(indexFileData)
-    console.log(index)
-    const orderDetails = await fetchFile(indexFileData[index])
-    res.send({ status: true, data: orderDetails })
+    try {
+        const orderDetails = await fetchFile(indexFileData[index])
+        res.send({ status: true, data: orderDetails })
+    } catch (error) {
+        res.status(error.response.status).send({ status: false, error })
+    }
+
 })
 
 router.post("/transfer-asset", async (req, res) => {
     const data = req.body
-    const result = await transferAsset(data.recipient_addr, data.buy_token_amount);
-    res.send({ status: true, data: result })
+    try {
+        const result = await transferAsset(data.recipient_addr, data.buy_token_amount);
+        res.send({ status: true, data: result })
+    } catch (error) {
+        res.status(error.response.status).send({ status: false, error })
+    }
+
 })
 
 

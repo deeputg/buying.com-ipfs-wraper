@@ -36,6 +36,7 @@ exports.transferAsset = (recipient_addr, buy_token_amount) => {
     recipient_addr: recipient_addr,
     buy_token: buy_token_amount
   }
+  console.log(body)
   return axios.post(genereicApi + "asset-transfer", body).then(returnData => {
     return returnData.data;
   }).catch(error => {

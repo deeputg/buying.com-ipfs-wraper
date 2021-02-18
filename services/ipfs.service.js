@@ -62,6 +62,7 @@ exports.fetchFile = async (hash) => {
     for await (const chunk of ipfs.cat(hash)) {
       chunks.push(chunk)
     }
+    console.log(Buffer.concat(chunks).toString())
     return Buffer.concat(chunks).toString();
   } catch (err) {
     console.log(err)
