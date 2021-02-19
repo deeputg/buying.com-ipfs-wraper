@@ -22,7 +22,6 @@ exports.fetchBalanceFromGenericAPI = (requester_addr) => {
   const body = {
     requester_addr
   }
-  console.log(genereicApi + "algo-balance")
 
   return axios.post(genereicApi + "algo-balance", body).then(returnData => {
     return returnData.data;
@@ -36,7 +35,6 @@ exports.transferAsset = (recipient_addr, buy_token_amount) => {
     recipient_addr: recipient_addr,
     buy_token: buy_token_amount
   }
-  console.log(body)
   return axios.post(genereicApi + "asset-transfer", body).then(returnData => {
     return returnData.data;
   }).catch(error => {
@@ -62,10 +60,8 @@ exports.fetchIndexFileHashFromGeneralAPI = () => {
   return axios.post(genereicApi + "algo-contract-state", body).then(returnData => {
     let indexFileHash = "";
     const indexFileKey_base64 = new Buffer.from("indexFileHash").toString('base64');
-    console.log(indexFileKey_base64)
     const contractState = returnData.data.contractState
     for (let i = 0; i < contractState.length; i++) {
-      // console.log(contractState[i].key)
       if (contractState[i].key == indexFileKey_base64) {
         indexFileHash = new Buffer.from(contractState[i].value.bytes, 'base64').toString('ascii');
       }

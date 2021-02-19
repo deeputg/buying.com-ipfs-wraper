@@ -36,6 +36,7 @@ router.post("/store-order-details", async (req, res) => {
         const result = await postDataToGenericAPI(indexHash);
         res.send({ status: true, data: result })
     } catch (error) {
+        console.log(error)
         res.status(error.response.status).send({ status: false, error })
 
     }
@@ -60,7 +61,7 @@ router.get("/status", async (req, res) => {
         res.send({ status: true, data: result });
     } catch (error) {
         console.log(error)
-        res.status(error.response.status).send(error)
+        res.status(error.response.status).send({ error: error.response.data.message })
     }
 
 })
@@ -72,7 +73,7 @@ router.get("/get-asset-balance/:address", async (req, res) => {
         res.send({ status: true, data: result });
     } catch (error) {
         console.log(error)
-        res.status(error.response.status).send(error)
+        res.status(error.response.status).send({ error: error.response.data.message })
     }
 
 })
@@ -104,7 +105,8 @@ router.post("/transfer-asset", async (req, res) => {
         const result = await transferAsset(data.recipient_addr, data.buy_token_amount);
         res.send({ status: true, data: result })
     } catch (error) {
-        res.status(error.response.status).send({ status: false, error })
+        console.log(error)
+        res.status(error.response.status).send({ error: error.response.data.message })
     }
 
 })
