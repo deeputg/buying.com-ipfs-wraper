@@ -33,11 +33,16 @@ router.post("/store-order-details", async (req, res) => {
     // const indexFileHash = ""
     try {
         const indexHash = await postOrderToIPFS(indexFileHash, data.orderData);
-        const result = await postDataToGenericAPI(indexHash);
-        res.send({ status: true, data: result })
+        try {
+            const result = await postDataToGenericAPI(indexHash);
+            res.send({ status: true, data: result })
+        } catch (error) {
+            res.send({ status: true, data: result })
+        }
+
     } catch (error) {
         console.log(error)
-        res.status(error.response.status).send({ status: false, error })
+        res.status(500).send({ status: false, error: "Writing to ipfs failed" })
 
     }
 
