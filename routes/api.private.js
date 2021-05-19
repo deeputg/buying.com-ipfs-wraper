@@ -24,6 +24,7 @@ const { getIndexFromDate } = require('../services/utility.service')
  * return the hash of the indexer file.
  */
 router.post("/store-order-details", async (req, res) => {
+    console.log(new Date(), "================Stor data=============", req.body)
     const data = req.body
 
     // fetch current indexFile hash
